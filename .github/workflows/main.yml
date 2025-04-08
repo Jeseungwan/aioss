@@ -14,10 +14,20 @@ on: [push, pull_request]
 #     pull_request:
 #       types: [opend, assigned]
 
+strategy:
+  matrix:
+    os_version: [macos-latest, ubuntu-latest]
+    node_version: [10, 12, 14]
+
 jobs:
   job_1:
     name: My first job
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
+    runs-on: ${{matrix.os_version}}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{node_version}}
   # job_2:
   #   name: My second job
   #   needs: job_1
